@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Goa Builder ID Card</title>
+  <style>
+    :root {
+      --paper: #ffffff;
+      --green: #065f3b;
+      --green-dark: #005a36;
+      --yellow: #f5b800;
+      --pink: #a23b72;
+      --pink-light: #c36591;
+      --mint: #c9f1de;
+      --card-width: 450px;
+      --card-height: 650px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      min-height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: grid;
+      min-height: 100vh;
+      place-items: center;
+      padding: 24px;
+      background: #e8ece9;
+      color: var(--paper);
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    }
+
+    .id-card {
+      position: relative;
+      width: min(var(--card-width), 100%);
+      aspect-ratio: 450 / 650;
+      overflow: hidden;
+      isolation: isolate;
+      background: var(--paper);
+      box-shadow: 0 24px 60px rgb(0 35 21 / 24%);
+    }
+
+    .top-green {
+      position: absolute;
+      z-index: -2;
+      inset: 0 auto auto 0;
+      width: 50.3%;
+      height: 42.6%;
+      background: var(--green-dark);
+    }
+
+    .hexagon-grid {
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      left: 0;
+      width: 52%;
+      height: 43%;
+      opacity: .46;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='76' viewBox='0 0 88 76'%3E%3Cpath d='M22 1h44l21 37-21 37H22L1 38 22 1Z' fill='none' stroke='%23b9ead2' stroke-opacity='.58' stroke-width='1'/%3E%3Cpath d='M0 38h22M66 38h22M22 1l21 37L22 75M66 1 45 38l21 37' fill='none' stroke='%23b9ead2' stroke-opacity='.28'/%3E%3C/svg%3E");
+    }
+
+    .profile-ring {
+      position: absolute;
+      z-index: 3;
+      top: 10.7%;
+      left: 10.1%;
+      width: 57.5%;
+      aspect-ratio: 1;
+      border: clamp(15px, 4vw, 22px) solid var(--paper);
+      border-radius: 50%;
+      box-shadow: 0 7px 12px rgb(0 61 39 / 10%);
+    }
+
+    .profile-ring::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: -1px;
+      border: clamp(8px, 2.2vw, 12px) solid var(--yellow);
+      border-radius: 50%;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      transform: rotate(-22deg);
+    }
+
+    .profile-photo {
+      position: absolute;
+      inset: 11%;
+      width: 78%;
+      height: 78%;
+      object-fit: cover;
+      border: 0;
+      border-radius: 50%;
+      filter: contrast(1.06) saturate(1.08);
+    }
+
+    .top-logo {
+      position: absolute;
+      z-index: 5;
+      top: 2.2%;
+      left: 52.5%;
+      width: 31%;
+      height: auto;
+      max-height: 15%;
+      object-fit: contain;
+      object-position: left center;
+    }
+
+    .top-logo::after { content: ""; }
+
+    .top-geometry {
+      position: absolute;
+      z-index: 4;
+      top: 0;
+      right: 0;
+      width: 31%;
+      height: 26%;
+    }
+
+    .top-geometry .chevron,
+    .bottom-geometry .chevron {
+      position: absolute;
+      width: 24%;
+      height: 29%;
+      border-top: 14px solid var(--yellow);
+      border-right: 14px solid var(--yellow);
+      transform: rotate(45deg);
+    }
+
+    .top-geometry .chevron { top: 4%; left: 3%; }
+    .top-geometry .chevron.green { top: 4%; left: 34%; border-color: var(--green-dark); }
+    .top-geometry .diamond,
+    .bottom-geometry .diamond {
+      position: absolute;
+      width: 26%;
+      aspect-ratio: 1;
+      transform: rotate(45deg);
+    }
+
+    .top-geometry .diamond { top: 42%; right: 5%; background: var(--green-dark); }
+    .top-geometry .diamond.small { top: 9%; right: 36%; width: 17%; background: var(--yellow); }
+
+    .wave {
+      position: absolute;
+      z-index: -1;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 42%;
+      background: var(--green);
+      clip-path: path("M 0 90 C 120 90 145 90 210 90 C 295 90 300 130 365 145 C 408 155 430 186 450 205 L 450 650 L 0 650 Z");
+    }
+
+    .bottom-triangles {
+      position: absolute;
+      z-index: 1;
+      bottom: 30.5%;
+      left: 0;
+      width: 27%;
+      height: 25%;
+      opacity: .72;
+    }
+
+    .bottom-triangles span {
+      position: absolute;
+      display: block;
+      width: 0;
+      height: 0;
+      border-right: 48px solid transparent;
+      border-bottom: 78px solid var(--pink);
+      border-left: 48px solid transparent;
+      opacity: .75;
+    }
+
+    .bottom-triangles span:nth-child(1) { top: 2%; left: -7%; }
+    .bottom-triangles span:nth-child(2) { top: 27%; left: 28%; border-bottom-color: var(--pink-light); }
+    .bottom-triangles span:nth-child(3) { top: 51%; left: -12%; border-bottom-color: #6e6686; }
+    .bottom-triangles span:nth-child(4) { top: 67%; left: 28%; border-bottom-color: var(--pink); }
+    .bottom-triangles span:nth-child(5) { top: 24%; left: 65%; border-bottom-color: var(--mint); }
+
+    .palm-tree {
+      position: absolute;
+      z-index: 4;
+      right: -4%;
+      bottom: 20%;
+      width: 40%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .bottom-geometry {
+      position: absolute;
+      z-index: 5;
+      right: -1%;
+      bottom: 1.5%;
+      width: 25%;
+      height: 24%;
+    }
+
+    .bottom-geometry .chevron { bottom: 28%; left: 7%; }
+    .bottom-geometry .chevron.green { bottom: 28%; left: 38%; border-color: var(--green-dark); }
+    .bottom-geometry .diamond { right: 4%; bottom: 0; background: var(--green-dark); }
+    .bottom-geometry .diamond.yellow { right: 36%; bottom: 5%; width: 18%; background: var(--yellow); }
+
+    .content {
+      position: absolute;
+      z-index: 6;
+      right: 4%;
+      bottom: 5.6%;
+      left: 4%;
+    }
+
+    .name {
+      max-width: 95%;
+      margin: 0 0 10px;
+      color: var(--paper);
+      font-size: clamp(24px, 7vw, 38px);
+      line-height: .92;
+      letter-spacing: -.03em;
+      white-space: nowrap;
+    }
+
+    .job-title {
+      margin: 0 0 14px 22%;
+      color: var(--mint);
+      font-family: "Arial Narrow", Arial, sans-serif;
+      font-size: clamp(14px, 3.5vw, 20px);
+      font-style: italic;
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+
+    .details {
+      display: grid;
+      grid-template-columns: 72px 14px 1fr;
+      row-gap: 8px;
+      width: 77%;
+      margin-left: 7%;
+      color: var(--mint);
+      font-family: "Arial Narrow", Arial, sans-serif;
+      font-size: clamp(11px, 2.6vw, 15px);
+      line-height: 1.15;
+    }
+
+    .details .label { font-weight: 700; }
+    .details .value { white-space: nowrap; }
+
+    @media (max-width: 460px) {
+      body { padding: 0; background: var(--paper); }
+      .id-card { width: 100vw; }
+    }
+  </style>
+</head>
+<body>
+  <main class="id-card" aria-label="Goa Builder ID card">
+    <div class="top-green" aria-hidden="true"></div>
+    <div class="hexagon-grid" aria-hidden="true"></div>
+
+    <div class="profile-ring">
+      <!-- [IMAGE PLACEHOLDER: Profile Picture - profile.jpg] -->
+      <img class="profile-photo" src="profile.jpg" alt="Profile picture" />
+    </div>
+
+    <!-- [IMAGE PLACEHOLDER: Top Goa Logo - logo.png] -->
+    <img class="top-logo" src="logo-text.png" alt="Goa logo" />
+
+    <div class="top-geometry" aria-hidden="true">
+      <span class="chevron"></span>
+      <span class="chevron green"></span>
+      <span class="diamond"></span>
+      <span class="diamond small"></span>
+    </div>
+
+    <div class="wave" aria-hidden="true"></div>
+
+    <div class="bottom-triangles" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <!-- [IMAGE PLACEHOLDER: Palm Tree Graphic - palm-tree.png] -->
+    <img class="palm-tree" src="palm-tree.png" alt="Palm tree illustration" />
+
+    <div class="bottom-geometry" aria-hidden="true">
+      <span class="chevron"></span>
+      <span class="chevron green"></span>
+      <span class="diamond"></span>
+      <span class="diamond yellow"></span>
+    </div>
+
+    <section class="content">
+      <h1 class="name">ASHISH KUMAR TIWARI</h1>
+      <p class="job-title">AI ENGINEER</p>
+      <div class="details">
+        <span class="label">Id card</span><span>:</span><span class="value">123-456-7890</span>
+        <span class="label">Phone</span><span>:</span><span class="value">123 Anywhere St., Any City</span>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
