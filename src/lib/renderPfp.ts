@@ -1,89 +1,109 @@
-import { BRAND, EVENT } from './constants';
-import { roundRect } from './image';
-import { aestheticPhoto, drawBeveledBorder, drawCastShadow } from './photoFX';
+import { drawImageCover } from './image';
 
-export function renderPfp(ctx: CanvasRenderingContext2D, img: HTMLImageElement): void {
-  const W = 1024;
-  const H = 1024;
-  ctx.clearRect(0, 0, W, H);
+const W = 1024;
+const H = 1024;
 
-  // Background
-  ctx.fillStyle = BRAND.green;
-  ctx.fillRect(0, 0, W, H);
+let framePromise: Promise<HTMLImageElement> | null = null;
 
-  // Subtle texture dots
-  ctx.fillStyle = 'rgba(255, 237, 0, 0.04)';
-  for (let i = 0; i < 400; i++) {
-    const px = (i * 37) % W;
-    const py = (i * 53) % H;
-    ctx.fillRect(px, py, 2, 2);
-  }
+function loadPfpFrame(): Promise<HTMLImageElement> {
+  if (framePromise) return framePromise;
 
-  // Header
-  ctx.fillStyle = BRAND.yellow;
-  ctx.font = '700 28px "DM Mono", monospace';
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'top';
-  ctx.fillText('HH GOA 2026', 56, 48);
-  ctx.font = '500 18px "DM Mono", monospace';
-  ctx.fillText('FRAME IN GOA / 01', 56, 86);
+  framePromise = new Promise((resolve, reject) => {
+    const frame = new Image();
 
-  // Hashtag pill
-  ctx.fillStyle = BRAND.pink;
-  roundRect(ctx, 867, 51, 92, 26, 4);
-  ctx.fill();
-  ctx.fillStyle = BRAND.green;
-  ctx.font = '700 15px "DM Mono", monospace';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(EVENT.hashtag, 913, 64);
+    frame.onload = () => resolve(frame);
+    frame.onerror = () =>
+      reject(
+        new Error(
+          'Could not load PFP frame. Make sure public/pfp-frame.png exists.',
+        ),
+      );
 
-  // Photo with aesthetic processing + 3D beveled frame
-  const photoX = 94;
-  const photoY = 172;
-  const photoSize = 836;
+    frame.src = `${import.meta.env.BASE_URL}pfp-frame.png`;
+  });
 
-  // Cast shadow beneath
-  drawCastShadow(ctx, photoX, photoY, photoSize, photoSize, 18, 28, 14);
-
-  // Aesthetic photo (color grade + vignette + grain)
-  aestheticPhoto(ctx, img, photoX, photoY, photoSize, photoSize, 18, 1.04);
-
-  // 3D beveled border
-  drawBeveledBorder(ctx, photoX, photoY, photoSize, photoSize, 18, BRAND.yellow);
-
-  // Corner accent marks (3D depth cues)
-  drawCornerAccent(ctx, photoX - 6, photoY - 6, 40, BRAND.pink);
-
-  // Bottom display type
-  ctx.fillStyle = BRAND.yellow;
-  ctx.font = '500 76px "Oswald", Impact, sans-serif';
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'bottom';
-  ctx.fillText('SHOW UP.', 58, 980);
-
-  // Subtle bottom shadow under text for depth
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
-  ctx.fillText('SHOW UP.', 60, 982);
-  ctx.fillStyle = BRAND.yellow;
-  ctx.fillText('SHOW UP.', 58, 980);
+  return framePromise;
 }
 
-function drawCornerAccent(
+export async function renderPfp(
   ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  size: number,
-  color: string,
-): void {
+  img: HTMLImageElement,
+): Promise<void> {
+  ctx.clearRect(0, 0, W, H);
+
+  /*
+   * The supplied frame was cropped to its actual artwork bounds:
+   * 636 × 576.
+   *
+   * When scaled to 1024px wide:
+   * frame height ≈ 927px
+   *
+   * This keeps the original frame proportions.
+   */
+  const frameW = 1024;
+  const frameH = (576 / 636) * frameW;
+  const frameX = 0;
+  const frameY = (H - frameH) / 2;
+
+  /*
+   * Exact opening in the supplied frame.
+   *
+   * Center:
+   * X = 512
+   * Y = 512
+   *
+   * Radius ≈ 362px after scaling.
+   */
+  const photoCX = 512;
+  const photoCY = 512;
+  const photoR = 362;
+
+  // --------------------------------------------------
+  // 1. Draw uploaded photo FIRST
+  // --------------------------------------------------
+
   ctx.save();
-  ctx.fillStyle = color;
-  // Small triangular notch at top-left for a "tab" feel
+
+  // Circular photo mask
   ctx.beginPath();
-  ctx.moveTo(x, y);
-  ctx.lineTo(x + size, y);
-  ctx.lineTo(x, y + size);
-  ctx.closePath();
-  ctx.fill();
+  ctx.arc(photoCX, photoCY, photoR, 0, Math.PI * 2);
+  ctx.clip();
+
+  // Fill the complete circular opening.
+  // Increase this value if you want the face closer.
+  drawImageCover(
+    ctx,
+    img,
+    photoCX - photoR,
+    photoCY - photoR,
+    photoR * 2,
+    photoR * 2,
+    1.08,
+  );
+
+  // Slight color treatment
+  ctx.globalCompositeOperation = 'soft-light';
+  ctx.fillStyle = 'rgba(255, 210, 150, 0.10)';
+  ctx.fillRect(
+    photoCX - photoR,
+    photoCY - photoR,
+    photoR * 2,
+    photoR * 2,
+  );
+
   ctx.restore();
+
+  // --------------------------------------------------
+  // 2. Draw the supplied HH Goa frame ON TOP
+  // --------------------------------------------------
+
+  const frame = await loadPfpFrame();
+
+  ctx.drawImage(
+    frame,
+    frameX,
+    frameY,
+    frameW,
+    frameH,
+  );
 }

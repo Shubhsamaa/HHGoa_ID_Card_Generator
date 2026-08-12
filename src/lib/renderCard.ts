@@ -65,19 +65,19 @@ function drawPhotoCircle(
 ): void {
   const scale = Math.min(sx, sy);
 
-  // Exact center of the circular photo window in the SVG.
   const cx = 216 * sx;
-  const cy = 251 * sy;
-  const r = 101 * scale;
+  const cy = 240 * sy;
+  const r = 110 * scale;
 
   ctx.save();
 
-  // Keep the uploaded image completely inside the circular frame.
-  // A slightly lower zoom than before prevents unnecessary cropping.
+  // Circular photo frame
   ctx.beginPath();
   ctx.arc(cx, cy, r, 0, Math.PI * 2);
   ctx.clip();
 
+  // Fill the complete circle.
+  // 1.05 gives a tiny amount of crop so no empty space is visible.
   drawImageCover(
     ctx,
     img,
@@ -85,19 +85,25 @@ function drawPhotoCircle(
     cy - r,
     r * 2,
     r * 2,
-    0.92,
+    1.05,
   );
 
-  // Subtle printed-paper grade.
+  // Subtle printed-paper grade
   ctx.globalCompositeOperation = 'soft-light';
   ctx.fillStyle = 'rgba(255, 205, 125, 0.12)';
-  ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+  ctx.fillRect(
+    cx - r,
+    cy - r,
+    r * 2,
+    r * 2,
+  );
 
   ctx.restore();
 
-  // Clean inner outline.
+  // Inner circular outline
   ctx.strokeStyle = '#274b24';
   ctx.lineWidth = 2.2 * scale;
+
   ctx.beginPath();
   ctx.arc(cx, cy, r, 0, Math.PI * 2);
   ctx.stroke();
@@ -180,18 +186,16 @@ function coverTeamId(
   sy: number,
 ): void {
   const scale = Math.min(sx, sy);
-  const paper = '#fff2d3';
+  const paper = '#F8EBCA';
   const teamId = makeTeamId(name, stack);
 
-  /*
-   * The original sample ID is inside the upper-right team-id panel.
-   * Keep the panel border intact and only cover the interior text area.
-   */
+  // Team ID panel interior
   const x = 808;
   const y = 143;
-  const w = 255;
+  const w = 235;
   const h = 75;
 
+  // Cover only the text area
   ctx.fillStyle = paper;
   ctx.fillRect(
     x * sx,
@@ -200,21 +204,23 @@ function coverTeamId(
     h * sy,
   );
 
-  // Smaller + width-constrained ID so it can NEVER escape the panel.
-  const font = `800 ${32 * scale}px Arial, sans-serif`;
+  // Smaller font to keep ID safely inside the panel
+  const font = `800 ${27 * scale}px Arial, sans-serif`;
 
   ctx.fillStyle = '#274b24';
-  ctx.textAlign = 'left';
+  ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.font = font;
 
+  // Keep text comfortably inside the panel
   ctx.fillText(
-    fitText(ctx, teamId, 220 * sx, font),
-    828 * sx,
-    184 * sy,
+    fitText(ctx, teamId, 200 * sx, font),
+    935 * sx,
+    181 * sy,
   );
 
   ctx.textBaseline = 'alphabetic';
+  ctx.textAlign = 'left';
 }
 
 function redrawDecorativeDynamicDetails(

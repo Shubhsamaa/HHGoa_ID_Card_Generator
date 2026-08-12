@@ -44,7 +44,7 @@ export async function generateGraphic(
   let stack = '';
 
   if (format === 'pfp') {
-    renderPfp(ctx, img);
+    await renderPfp(ctx, img);
   } else {
     name = cardInput?.name?.trim() || '';
     stack = cardInput?.stack?.trim() || '';

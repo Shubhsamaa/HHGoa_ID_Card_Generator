@@ -142,23 +142,26 @@ function App() {
 
     {/* LEFT — LOGO / BRAND */}
     <div className="flex items-center">
-      <div className="display text-[24px] font-black tracking-tight text-[#FFED00] sm:text-[28px]">
-        HH GOA
-      </div>
+  <img
+    src="https://hhgoa-own-id-card.vercel.app/logo-background-remove.png"
+    alt="HH Goa"
+    className="h-10 w-auto object-contain sm:h-12"
+  />
 
-      <div className="ml-3 hidden h-7 w-px bg-[#FFED00]/30 sm:block" />
+  <div className="ml-3 hidden h-7 w-px bg-[#FFED00]/30 sm:block" />
 
-      <div className="ml-3 hidden text-[9px] font-bold uppercase tracking-[0.25em] text-white/60 sm:block">
-        FRAME BUILDER / 2026
-      </div>
-    </div>
+  <div className="ml-3 hidden text-[9px] font-bold uppercase tracking-[0.25em] text-white/60 sm:block">
+    FRAME BUILDER / 2026
+  </div>
+</div>
 
     {/* RIGHT NAVIGATION */}
     <div className="flex items-center gap-5 sm:gap-8">
 
       {/* CHECK */}
       <a
-        href="#builder"
+      target='_blank'
+        href="https://hhgoa.com/Prehype.mp4"
         className="
           hidden
           text-[13px]
@@ -173,33 +176,12 @@ function App() {
           sm:block
         "
       >
-        CHECK
-      </a>
-
-      {/* HYPE */}
-      <a
-        href="#about"
-        className="
-          hidden
-          text-[13px]
-          font-semibold
-          uppercase
-          tracking-[0.12em]
-          text-white
-          transition-all
-          duration-200
-          hover:-translate-y-0.5
-          hover:text-[#FFED00]
-          sm:block
-        "
-      >
-        HYPE
+        CHECK HYPE
       </a>
 
       {/* APPLY TICKET */}
       <a
-        href={`https://${EVENT.url}`}
-        target="_blank"
+        href='#create'
         rel="noopener noreferrer"
         className="
           group
@@ -243,7 +225,7 @@ function App() {
 
         {/* APPLY TEXT */}
         <span className="display relative z-10 pt-0.5 text-[24px] font-black tracking-wide sm:text-[27px]">
-          APPLY
+          CREATE
         </span>
 
         {/* Hover shine */}
@@ -268,27 +250,75 @@ function App() {
 
       <main className="relative z-10 mx-auto max-w-[1440px] px-5 pb-14 pt-8 sm:px-10 sm:pt-12">
         {/* Hero */}
-        <section className="relative grid items-center gap-10 lg:grid-cols-[1.15fr_.85fr] lg:gap-20">
-          <div className="max-w-[760px]">
-            <h1 className="display text-[18vw] font-medium uppercase leading-[.78] tracking-[-.045em] sm:text-[120px] lg:text-[148px]" style={{ textShadow: '0 6px 0 rgba(0,0,0,0.15), 0 12px 40px rgba(0,0,0,0.3)' }}>Frame<br /><span className="shimmer-text">your</span><br />moment.</h1>
-            <p className="mt-8 max-w-[520px] text-sm leading-7 text-white/65 sm:text-base">Turn one photo into a piece of HH Goa 2026. Pick your format, make it yours, and leave with something worth posting.</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <div className="glass-pill flex items-center gap-2 rounded-full px-4 py-2 text-[10px] uppercase tracking-[.16em] text-white/70"><Camera size={14} className="text-[#FFED00]" /> Auto color-grade</div>
-              <div className="glass-pill flex items-center gap-2 rounded-full px-4 py-2 text-[10px] uppercase tracking-[.16em] text-white/70"><WandSparkles size={14} className="text-[#FF0A8A]" /> AI-styled frames</div>
-              <div className="glass-pill flex items-center gap-2 rounded-full px-4 py-2 text-[10px] uppercase tracking-[.16em] text-white/70"><Share2 size={14} className="text-[#FFED00]" /> One-click share</div>
-            </div>
-          </div>
-          <div className="hidden justify-end lg:flex"><HeroVisual /></div>
-        </section>
+<section className="relative grid items-center gap-10 lg:grid-cols-[1.15fr_.85fr] lg:gap-20">
+  <div className="max-w-[760px] animate-hero-up">
+    <h1
+      className="display text-[18vw] font-medium uppercase leading-[.78] tracking-[-0.045em] sm:text-[120px] lg:text-[148px]"
+      style={{
+        textShadow:
+          '0 6px 0 rgba(0,0,0,0.15), 0 12px 40px rgba(0,0,0,0.3)',
+      }}
+    >
+      Frame
+      <br />
+      <span className="shimmer-text">your</span>
+      <br />
+      moment.
+    </h1>
+
+    <p className="mt-8 max-w-[520px] text-sm leading-7 text-white/65 sm:text-base">
+      Turn one photo into a piece of HH Goa 2026. Pick your format, make it
+      yours, and leave with something worth posting.
+    </p>
+
+    <div className="mt-8 flex flex-wrap gap-3">
+      <div className="glass-pill flex items-center gap-2 rounded-full px-4 py-2 text-[10px] uppercase tracking-[.16em] text-white/70">
+        <Camera size={14} className="text-[#FFED00]" />
+        Auto color-grade
+      </div>
+
+      <div className="glass-pill flex items-center gap-2 rounded-full px-4 py-2 text-[10px] uppercase tracking-[.16em] text-white/70">
+        <WandSparkles size={14} className="text-[#FF0A8A]" />
+        AI-styled frames
+      </div>
+
+      <div className="glass-pill flex items-center gap-2 rounded-full px-4 py-2 text-[10px] uppercase tracking-[.16em] text-white/70">
+        <Share2 size={14} className="text-[#FFED00]" />
+        One-click share
+      </div>
+    </div>
+  </div>
+
+  <div className="hidden justify-end lg:flex">
+    <HeroVisual />
+  </div>
+</section>
 
         {/* Marquee */}
-        <div className="my-10 overflow-hidden border-y border-white/10 py-3 text-[10px] uppercase tracking-[.28em] text-white/45 sm:my-14">
-          <div className="marquee-track flex min-w-max gap-10"><span>{HASHTAG}</span><span>·</span><span>Made for builders</span><span>·</span><span>Ready for X</span><span>·</span><span>HH Goa 2026</span><span>·</span><span>{HASHTAG}</span><span>·</span><span>Made for builders</span><span>·</span><span>Ready for X</span><span>·</span><span>HH Goa 2026</span><span>·</span></div>
-        </div>
+        <div className="my-10 overflow-hidden border-y border-black/10 bg-[#F5E6C8] py-3 text-[10px] uppercase tracking-[.28em] text-black sm:my-14">
+  <div className="marquee-track flex min-w-max gap-10">
+    <span>{HASHTAG}</span>
+    <span>·</span>
+    <span>Made for builders</span>
+    <span>·</span>
+    <span>Ready for X</span>
+    <span>·</span>
+    <span>HH Goa 2026</span>
+    <span>·</span>
+    <span>{HASHTAG}</span>
+    <span>·</span>
+    <span>Made for builders</span>
+    <span>·</span>
+    <span>Ready for X</span>
+    <span>·</span>
+    <span>HH Goa 2026</span>
+    <span>·</span>
+  </div>
+</div>
 
         {/* Builder / result section */}
         {step !== 'result' ? (
-          <section className="grid gap-8 lg:grid-cols-[.74fr_1.26fr] lg:gap-14">
+          <section id='create' className="grid gap-8 lg:grid-cols-[.74fr_1.26fr] lg:gap-14">
             <div className="space-y-7">
               <div className="flex items-center gap-3 text-[10px] uppercase tracking-[.2em] text-white/50"><StepMarker number={stepIndex} /><span>Build your graphic</span></div>
               {step === 'upload' && <UploadPanel format={format} setFormat={setFormat} inputRef={inputRef} dragActive={dragActive} setDragActive={setDragActive} onDrop={onDrop} onFile={handleFile} error={error} />}
@@ -638,24 +668,55 @@ function UploadPanel({ format, setFormat, inputRef, dragActive, setDragActive, o
       </div>
 
       <div
-        onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
-        onDragLeave={() => setDragActive(false)}
-        onDrop={onDrop}
-        onClick={() => inputRef.current?.click()}
-        className={`group relative min-h-[320px] cursor-pointer overflow-hidden rounded-2xl border-2 border-dashed p-8 transition-all duration-300 sm:min-h-[380px] ${dragActive ? 'border-[#FF0A8A] bg-[#FF0A8A]/10 shadow-[0_20px_60px_rgba(255,10,138,0.3)]' : 'glass border-white/15 hover:border-[#FFED00]/50 hover:shadow-[0_20px_60px_rgba(0,0,0,0.35)] hover:-translate-y-1'}`}
-        style={{ transformStyle: 'preserve-3d' }}
-      >
-        <input ref={inputRef} type="file" accept="image/jpeg,image/png,image/heic,image/heif,.heic,.heif" onChange={(e) => { const photo = e.target.files?.[0]; if (photo) onFile(photo); }} className="hidden" />
-        <div className="pointer-events-none absolute inset-0 bg-grid opacity-10" />
-        <div className="flex h-full min-h-[280px] flex-col items-center justify-center text-center">
-          <div className="upload-ring mb-6 grid h-20 w-20 place-items-center rounded-full border border-[#FFED00]/40 bg-[#FFED00]/10 text-[#FFED00] shadow-[0_10px_40px_rgba(255,237,0,0.2),inset_0_2px_8px_rgba(255,255,255,0.1)] backdrop-blur-md transition-transform group-hover:scale-110">
-            <ImagePlus size={30} strokeWidth={2.5} />
-          </div>
-          <div className="display text-4xl uppercase leading-none sm:text-5xl neon-text">Drop your<br />best shot.</div>
-          <p className="mt-4 text-[10px] uppercase tracking-[.18em] text-white/45">JPG · PNG · HEIC / tap to browse</p>
-          <div className="mt-8 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.2em] text-[#FF0A8A]">Start creating <ChevronRight size={14} /></div>
-        </div>
-      </div>
+  onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
+  onDragLeave={() => setDragActive(false)}
+  onDrop={onDrop}
+  onClick={() => inputRef.current?.click()}
+  className={`group relative min-h-[320px] cursor-pointer overflow-hidden rounded-2xl border-2 border-dashed bg-[#9AC95F] p-8 transition-all duration-300 sm:min-h-[380px] ${
+    dragActive
+      ? 'border-[#FF0A8A] bg-[#9AC95F] shadow-[0_20px_60px_rgba(255,10,138,0.3)]'
+      : 'border-black/15 hover:border-[#FF0A8A]/70 hover:shadow-[0_20px_60px_rgba(0,0,0,0.15)] hover:-translate-y-1'
+  }`}
+  style={{ transformStyle: 'preserve-3d' }}
+>
+  <input
+    ref={inputRef}
+    type="file"
+    accept="image/jpeg,image/png,image/heic,image/heif,.heic,.heif"
+    onChange={(e) => {
+      const photo = e.target.files?.[0];
+      if (photo) onFile(photo);
+    }}
+    className="hidden"
+  />
+
+  <div className="pointer-events-none absolute inset-0 bg-grid opacity-10" />
+
+  <div className="flex h-full min-h-[280px] flex-col items-center justify-center text-center">
+
+    {/* Upload Icon */}
+    <div className="upload-ring mb-6 grid h-20 w-20 place-items-center rounded-full border-2 border-black/30 bg-black/10 text-black shadow-[0_10px_30px_rgba(0,0,0,0.15)] backdrop-blur-md transition-transform group-hover:scale-110">
+      <ImagePlus size={30} strokeWidth={2.5} />
+    </div>
+
+    {/* Heading */}
+    <div className="display text-4xl uppercase leading-none text-black sm:text-5xl">
+      Drop your<br />best shot.
+    </div>
+
+    {/* Supported formats */}
+    <p className="mt-4 text-[11px] uppercase tracking-[.18em] text-black/60">
+      JPG · PNG · HEIC / tap to browse
+    </p>
+
+    {/* CTA */}
+    <div className="mt-8 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.2em] text-[#FF0A8A]">
+      Start creating
+      <ChevronRight size={14} strokeWidth={3} />
+    </div>
+
+  </div>
+</div>
 
       {error && <div className="glass-strong flex items-center gap-2 rounded-xl border border-[#FF0A8A]/40 p-3 text-xs text-[#FFED00] shadow-[0_4px_15px_rgba(255,10,138,0.2)]"><AlertCircle size={16} className="text-[#FF0A8A]" />{error}</div>}
       <p className="text-[10px] uppercase leading-5 tracking-[.14em] text-white/35">Your photo gets color-graded, vignetted, and grain-textured automatically — no editing skills needed.</p>
@@ -730,18 +791,49 @@ function ResultPanel({ result, onDownload, onShare, onReset, shareToast }: { res
       </div>
 
       {/* Dedicated large result stage: the generated card gets the visual priority. */}
-      <div className="glass-card relative overflow-hidden rounded-3xl p-3 shadow-[0_35px_100px_rgba(0,0,0,0.5)] sm:p-5">
-        <div className="pointer-events-none absolute inset-0 bg-grid opacity-10" />
-        <div className="relative flex min-h-[360px] items-center justify-center rounded-2xl border border-white/10 bg-black/10 p-3 sm:p-6 lg:min-h-[520px]">
-          <div className="relative w-full max-w-[1180px]" style={{ perspective: '1200px' }}>
-            <div ref={ref} onMouseMove={onMouseMove} onMouseLeave={onMouseLeave} className="tilt-card relative overflow-hidden rounded-xl shadow-[0_30px_80px_rgba(0,0,0,0.55)]">
-              <img src={result.dataUrl} alt="Generated HH Goa ID card" className="block h-auto w-full rounded-xl" style={{ transform: 'translateZ(20px)' }} />
-              <div className="absolute left-4 top-4 rounded-lg bg-[#FF0A8A] px-3 py-1.5 text-[9px] font-bold uppercase tracking-widest shadow-[0_4px_12px_rgba(255,10,138,0.4)] sm:left-6 sm:top-6">Final PNG</div>
-              <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-br from-white/10 via-transparent to-transparent" />
-            </div>
-          </div>
+<div className="glass-card relative overflow-hidden rounded-3xl p-3 shadow-[0_35px_100px_rgba(0,0,0,0.5)] sm:p-5">
+  <div className="pointer-events-none absolute inset-0 bg-grid opacity-10" />
+
+  <div className="relative flex min-h-[360px] items-center justify-center rounded-2xl border border-white/10 bg-black/10 p-3 sm:p-6 lg:min-h-[520px]">
+
+    <div
+      className="relative flex w-full items-center justify-center"
+      style={{
+        perspective: '1200px',
+        maxHeight: 'calc(100vh - 220px)',
+      }}
+    >
+      <div
+        ref={ref}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+        className="tilt-card relative overflow-hidden rounded-xl shadow-[0_30px_80px_rgba(0,0,0,0.55)]"
+        style={{
+          maxWidth: '100%',
+          maxHeight: 'calc(100vh - 220px)',
+        }}
+      >
+        <img
+          src={result.dataUrl}
+          alt="Generated HH Goa ID card"
+          className="block w-auto max-w-full rounded-xl object-contain"
+          style={{
+            maxHeight: 'calc(100vh - 220px)',
+            width: 'auto',
+            transform: 'translateZ(20px)',
+          }}
+        />
+
+        <div className="absolute left-4 top-4 rounded-lg bg-[#FF0A8A] px-3 py-1.5 text-[9px] font-bold uppercase tracking-widest shadow-[0_4px_12px_rgba(255,10,138,0.4)] sm:left-6 sm:top-6">
+          Final PNG
         </div>
+
+        <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-br from-white/10 via-transparent to-transparent" />
       </div>
+    </div>
+
+  </div>
+</div>
 
       {/* Actions stay below the large preview for maximum card visibility. */}
       <div className="mx-auto grid w-full max-w-[760px] grid-cols-2 gap-3">
@@ -771,18 +863,21 @@ function Manifest() {
         </div>
       </div>
 
-      <div className="space-y-4">
-        {[
-          { n: '01', t: 'Upload any photo — portrait, landscape, off-center. We auto-crop and color-grade it.' },
-          { n: '02', t: 'Wrap it in the official HH Goa PFP frame or build a shareable identity card.' },
-          { n: '03', t: 'Download a real PNG or post straight to X with a pre-written caption.' },
-        ].map((s) => (
-          <div key={s.n} className="glass-pill flex gap-4 rounded-xl p-4 text-xs leading-6 text-white/60">
-            <span className="text-[#FF0A8A] font-bold">{s.n}</span>
-            <span>{s.t}</span>
-          </div>
-        ))}
-      </div>
+<div className="space-y-4">
+  {[
+    { n: '01', t: 'Upload any photo — portrait, landscape, off-center. We auto-crop and color-grade it.' },
+    { n: '02', t: 'Wrap it in the official HH Goa PFP frame or build a shareable identity card.' },
+    { n: '03', t: 'Download a real PNG or post straight to X with a pre-written caption.' },
+  ].map((s) => (
+    <div
+      key={s.n}
+      className="flex gap-4 rounded-xl border border-black/10 bg-[#F5E6C8] p-4 text-xs leading-6 text-black"
+    >
+      <span className="font-bold text-[#FF0A8A]">{s.n}</span>
+      <span>{s.t}</span>
+    </div>
+  ))}
+</div>
 
       <div className="glass-strong rounded-2xl p-4 text-[10px] uppercase leading-5 tracking-[.14em] text-white/45">Designed for the feed.<br />Built for the builders.</div>
     </div>
